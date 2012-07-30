@@ -5,13 +5,16 @@
 --------
 
     include_once "PayU.cls.php";
-    $option  = array( 'merchant' => 'MERCHANT', 'secretkey' => 'SECRETKEY' /*[, 'debug' => 1 ...] изменение доп параметров */ );
+    $option  = array( 'merchant' => 'MERCHANT', 
+                      'secretkey' => 'SECRETKEY' 
+                      /*[, 'debug' => 1 ...] изменение доп параметров */ 
+                    );
 
 Дополнительные параметры : 
-    luUrl : Ссылка для LiveUpdate, по-умолчанию : https://secure.payu.ua/order/lu.php
-    button : Контент кнопки (также можно добавить дополнительные поля или контент) , по-умолчанию : "<input type='submit'>"
-    debug : Включить режим отладки, по-умолчанию выключен : 0, для включения передать 1
-    showinputs : Задает тип для input (использовать для проверки полей), по-умолчанию  "hidden"
+luUrl : Ссылка для LiveUpdate, по-умолчанию : https://secure.payu.ua/order/lu.php
+button : Контент кнопки (также можно добавить дополнительные поля или контент) , по-умолчанию : "<input type='submit'>"
+debug : Включить режим отладки, по-умолчанию выключен : 0, для включения передать 1
+showinputs : Задает тип для input (использовать для проверки полей), по-умолчанию  "hidden"
 
 
 2. Генерация формы для создания запроса на PayU
@@ -39,9 +42,9 @@
     echo $pay; # вывод формы
 
 Вывод формы после предварительной инициализации
-    1)  $pay2 = PayU::getInst();
-        echo $pay2;
-    2)  echo PayU::getInst();
+1.  $pay2 = PayU::getInst();
+    echo $pay2;
+2.  echo PayU::getInst();
 
 -------------------------------------------------
 

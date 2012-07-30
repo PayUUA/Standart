@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Стандартный класс для интеграции PayU 
 ========
 
@@ -74,3 +75,9 @@ if ( $pay ) echo "Real request";
   else echo "Fake request";
 
 }
+=======
+Standart
+========
+
+Standart payment class (PHP)
+>>>>>>> 70609af27088daeb3d27f5a5e30f06a264c8925b

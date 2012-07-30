@@ -1,8 +1,8 @@
-<<<<<<< HEAD
 Стандартный класс для интеграции PayU 
 ========
 
 1. подключение файла с классом PayU
+--------
 
 include_once "PayU.cls.php";
 $option  = array( 'merchant' => 'MERCHANT', 'secretkey' => 'SECRETKEY' /*[, 'debug' => 1 ...] изменение доп параметров */ );
@@ -14,6 +14,7 @@ $option  = array( 'merchant' => 'MERCHANT', 'secretkey' => 'SECRETKEY' /*[, 'deb
 
 
 2. Генерация формы для создания запроса на PayU
+--------
 
 Создаем массив данных : 
 
@@ -45,6 +46,7 @@ echo $pay; # вывод формы
 -------------------------------------------------
 
 Чтение IPN ответа от сервера PayU
+--------
 
 PayU возвращает информацию на IPN только в случае успешной оплаты.
 
@@ -64,7 +66,7 @@ if( isset($_GET['answer']) )
 -------------------------------------------------
 
 Проверка ссылки, по которой вернулся клиент (BACK_REF)
-
+--------
 Если на сайте используется SSL протокол, указывайте 'https' в качестве параметра метода checkBackRef  : ( ..->checkBackRef('https') )
 
 if (isset($_GET['ctrl']))
@@ -75,9 +77,3 @@ if ( $pay ) echo "Real request";
   else echo "Fake request";
 
 }
-=======
-Standart
-========
-
-Standart payment class (PHP)
->>>>>>> 70609af27088daeb3d27f5a5e30f06a264c8925b

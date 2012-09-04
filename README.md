@@ -1,3 +1,6 @@
+(For PayU Ukraine and Russian ONLY)
+-------
+
 Стандартный класс для интеграции PayU 
 ========
 

@@ -11,7 +11,7 @@ class PayU
 	private $data = array(), $dataArr = array(), $answer = ""; 
 	private $LUcell = array( 'MERCHANT' => 1, 'ORDER_REF' => 0, 'ORDER_DATE' => 1, 'ORDER_PNAME' => 1, 'ORDER_PGROUP' => 0,
 							'ORDER_PCODE' => 1, 'ORDER_PINFO' => 0, 'ORDER_PRICE' => 1, 'ORDER_QTY' => 1, 'ORDER_VAT' => 1, 
-							'ORDER_SHIPPING' => 1, 'PRICES_CURRENCY' => 1, 'PAY_METHOD' => 0, 'ORDER_PRICE_TYPE' => 0);
+							'ORDER_SHIPPING' => 1, 'PRICES_CURRENCY' => 1, 'DISCOUNT' => 0, 'PAY_METHOD' => 0, 'ORDER_PRICE_TYPE' => 0);
 
 	private $IPNcell = array( "IPN_PID", "IPN_PNAME", "IPN_DATE", "ORDERSTATUS" );
 
@@ -120,7 +120,7 @@ class PayU
 #-----------------------------
 	private function genereteForm( $data )
 	{	
-		$form = '<form method="post" action="'.$this->luUrl.'">';
+		$form = '<form method="post" action="'.$this->luUrl.'" accept-charset="utf-8">';
 		foreach ( $data as $k => $v ) $form .= $this->makeString( $k, $v );
 		return $form . $this->button."</form>";
 	}	

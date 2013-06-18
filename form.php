@@ -45,4 +45,28 @@ if( isset($_GET['answer']) )
 	echo $payansewer;
 }
 
+
+# Complete after delivery (IDN)
+if (isset($_GET['idn']))
+{
+$date = time();
+		$forSend = array( 'ORDER_REF' => "12345678",  # Order of payment
+						  'ORDER_AMOUNT' => "1.00",  # Amount of payment
+						  'ORDER_CURRENCY' => "UAH",  # Currency
+						  'IDN_DATE' => date("Y-m-d H:i:s", $date), # Date of payment
+						  );
+		$pay = PayU::getInst()->setOptions( $this->payuOpt )->setData( $forSend )->IDN();
+}
+
+
+if (isset($_GET['irn']))
+{
+$date = time();
+		$forSend = array( 'ORDER_REF' => "12345678", # Order of payment
+						  'ORDER_AMOUNT' => "1.00",  # Amount of payment (Если сумма меньше чем платеж, будет частичный возврат )
+						  'ORDER_CURRENCY' => "UAH",  # Currency
+						  'IRN_DATE' => date("Y-m-d H:i:s", $date), # Date of payment
+						  );
+		$pay = PayU::getInst()->setOptions( $this->payuOpt )->setData( $forSend )->IRN();
+}		
 ?>

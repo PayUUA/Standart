@@ -23,6 +23,12 @@ $forSend = array (
 #Create form
 if( !isset($_GET['answer']) && !isset( $_GET['ctrl'] ))
 {
+
+		# for iFrame 
+		$option['isFrame'] = false;
+		$option['frameStyle'] = " width:1200px; height:800px; border:none;";   # Optional value. default : width:900px; height:450px; border:none;
+
+
 	$pay = PayU::getInst()->setOptions( $option )->setData( $forSend )->LU();
 	echo $pay;
 }
@@ -68,5 +74,29 @@ $date = time();
 						  'IRN_DATE' => date("Y-m-d H:i:s", $date), # Date of payment
 						  );
 		$pay = PayU::getInst()->setOptions( $this->payuOpt )->setData( $forSend )->IRN();
-}		
+}
+
+
+if( isset($_GET['p2p']))
+{
+	$forSend = array(	
+						"currency" => "UAH", 
+						"amount" => 1.0, 
+						"outerId" => "newOrder",   #(!)
+						"senderFirstName" => "sender firstname", #(!)
+						"senderLastName" => "sender lastname", #(!)
+						"senderEmail" => "sender email",#(!)
+						
+						"clientEmail" => "reciver email",   #(!)
+						"clientFirstName" => "reciver first name",   #(!)
+						"clientLastName" => "reciver last name",   #(!)
+						"ccnumber" => "4149000000000000", #(!)
+
+						"desc" => "Description", # "Test p2p send",   #(!)
+						"timestamp" => strtotime( date("Y-m-d H:i:s") . " +1 hour" ),   #(!)
+						"payin" => "1",   #(!)
+						"paymentChannel" => "Visa/Mastercard"
+					);
+$pay = PayU::getInst()->setOptions( $option )->setData( $forSend )->P2P();
+}
 ?>

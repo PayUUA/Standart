@@ -5,8 +5,12 @@ class PayU
 		$button = "<input type='submit'>",
 		$debug = 0,
 		$showinputs = "hidden",
+		$isToken = false,
+		$isFrame = false,
+		$frameStyle = "width:900px; height:450px; border:none;",
 		$idnUrl = "https://secure.payu.ua/order/idn.php",
-		$irnUrl = "https://secure.payu.ua/order/irn.php" ;
+		$irnUrl = "https://secure.payu.ua/order/irn.php",
+		$p2pUrl = "https://secure.payu.ua/order/prepaid/NewCardPayout" ; # https://secure.payu.ua/order/prepaid/NewCardPayout
 
 	private static $Inst = false, $merchant, $key;
 
@@ -22,6 +26,12 @@ class PayU
 	private $IRNcell = array(  'MERCHANT' => 1, 'ORDER_REF' => 1, 'ORDER_AMOUNT' => 1, 'ORDER_CURRENCY' => 1, 'IRN_DATE' => 1 );
 
 
+	private $P2Pcell = array( 	"merchantCode" => 1, "currency" => 0, "outerId" => 1, "senderFirstName" => 1, "senderLastName" => 1, "senderEmail" => 1,
+								"senderPhone" => 0,	"clientEmail" => 1, "clientFirstName" => 1, "clientLastName" => 1, "clientCity" => 0, "clientAddress" => 0,
+								"clientPostalCode" => 0, "clientCountryCode" => 0, "ccnumber" => 1, "merchantFee" => 0,	"desc" => 1, "timestamp" => 1, 
+								"payin" => 1, "paymentChannel" => 0	);
+
+
 	private function __construct(){}
 	private function __clone(){}
 	public function __toString()
@@ -33,6 +43,8 @@ class PayU
 		if( self::$Inst === false ) self::$Inst = new PayU();
 		return self::$Inst;
 	}
+
+	function getAnswer(){ return $this->answer; }
 
 #---------------------------------------------
 # Add all options for PayU object. 
@@ -127,7 +139,17 @@ class PayU
 #-----------------------------
 	private function genereteForm( $data )
 	{	
-		$form = '<form method="post" action="'.$this->luUrl.'" accept-charset="utf-8">';
+		$form = $st = "";
+
+		if( $this->isFrame )
+			{ 
+				$st = 'target="paymentFrame" '; 
+				$form = '<iframe name="paymentFrame" style="'.$this->frameStyle.'" scrolling="no"></iframe>'.
+						'<script>document.getElementById("payUform").submit();</script>';
+			 }
+
+			 
+		$form .= '<form method="post" action="'.$this->luUrl.'" accept-charset="utf-8" id="payUform" '.$st.'>';
 		foreach ( $data as $k => $v ) $form .= $this->makeString( $k, $v );
 		return $form . $this->button."</form>";
 	}	
@@ -273,6 +295,40 @@ class PayU
 
 
 #======================= END IRN ============================
+
+#======================= P2P SEND ============================
+
+	public function P2P()
+	{	
+		$arr = &$this->dataArr;
+		$arr['merchantCode'] = self::$merchant;
+		if( !isset($arr['timestamp']) ) $arr['timestamp'] = strtotime( date("Y-m-d H:i:s") . "+1 hour" ); #date("Y-m-d H:i:s");
+
+		$param = $arr;
+
+		ksort( $param );
+		
+		$str = implode("", $param ) . self::$key;
+		
+		$arr['signature'] = md5( $str );
+
+		$this->sendRequest( $this->p2pUrl, $arr);
+
+		return $this;
+	}
+
+	private function P2PcheckArray( $data )
+	{
+		$this->cells = array();
+		$ret = array();
+		foreach ( $this->P2Pcell as $k => $v ) 
+		{ 	
+			if ( isset($data[$k]) ) $ret[$k] = $data[$k];
+			 elseif ( $v == 1 ) die("$k is not set");
+		}
+		return $ret;
+	}
+#======================= END P2P ============================
 
 }
 

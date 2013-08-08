@@ -25,7 +25,7 @@ if( !isset($_GET['answer']) && !isset( $_GET['ctrl'] ))
 {
 
 		# for iFrame 
-		$option['isFrame'] = false;
+		$option['isFrame'] = true;
 		$option['frameStyle'] = " width:1200px; height:800px; border:none;";   # Optional value. default : width:900px; height:450px; border:none;
 
 

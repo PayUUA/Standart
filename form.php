@@ -99,4 +99,3 @@ if( isset($_GET['p2p']))
 					);
 $pay = PayU::getInst()->setOptions( $option )->setData( $forSend )->P2P();
 }
-?>

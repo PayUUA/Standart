@@ -1,0 +1,14 @@
+{
+    "name": "PayUUA/Standart",
+    "description": "",
+    "keywords": [],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "classmap": [
+            ""
+        ]
+    },
+    "minimum-stability": "dev"
+}

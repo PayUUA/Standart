@@ -137,7 +137,7 @@ class PayU
 #-----------------------------
 # Method which create a form
 #-----------------------------
-	private function generetaForm( $data )
+	private function generateForm( $data )
 	{	
 		$form = $st = "";
 
